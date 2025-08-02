@@ -23,8 +23,6 @@ pip-wheel-metadata/
 
 # 🪄 FastAPI & logs
 *.log
-alembic/
-alembic.ini
 
 # 🔐 Configs sensibles
 backend/.env
