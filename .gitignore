@@ -1,0 +1,47 @@
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.db
+*.sqlite3
+
+# 📦 Virtualenv
+.env
+.venv/
+venv/
+ENV/
+env/
+pip-wheel-metadata/
+
+# 🔧 IDE (VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+
+# 🪄 FastAPI & logs
+*.log
+alembic/
+alembic.ini
+
+# 🔐 Configs sensibles
+backend/.env
+frontend/.env
+
+# 🌐 Node / Vue
+node_modules/
+dist/
+*.local
+npm-debug.log*
+
+# 🧪 Tests
+.coverage
+.tox/
+htmlcov/
+.pytest_cache/
+
+# 💡 Others
+.DS_Store
+Thumbs.db
