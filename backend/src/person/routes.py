@@ -5,12 +5,14 @@ from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.exceptions import HTTPException
 
+from src.auth.depedencies import AccessTokenBearer
+
 person_router = APIRouter()
 user_service = PersonService()
-
+access_token_bearer = AccessTokenBearer()
 
 @person_router.get("/")
-async def get_persons(session: AsyncSession = Depends(get_session)):
+async def get_persons(session: AsyncSession = Depends(get_session), user_details=Depends(access_token_bearer)):
     persons_list = await user_service.get_all_persons(session)
     return persons_list
 

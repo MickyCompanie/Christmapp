@@ -45,9 +45,9 @@ async def login(user_data: UserLoginModel, session: AsyncSession = Depends(get_s
     user = await user_service.get_user_by_email(email, session)
 
     if user is not None:
-        passeord_valid = verify_password(password, user.pasword_hash)
+        password_valid = verify_password(password, user.password_hash)
 
-        if passeord_valid:
+        if password_valid:
             access_token = create_access_token(user_data={"user_uid": str(user.uid), "email": user.email})
             refresh_token = create_access_token(user_data={"user_uid": str(user.uid), "email": user.email}, refresh=True, expiry=timedelta(days=REFRESH_TOKEN_EXPIRY))
 
