@@ -30,6 +30,13 @@ async def get_users(session: AsyncSession = Depends(get_session)):
     user_list = await user_service.get_all_users(session)
     return user_list
 
+@auth_router.get("/{uid}", response_model=UserReadModel, status_code=status.HTTP_200_OK)
+async def get_user_by_uid(uid: str, session: AsyncSession = Depends(get_session)):
+    user = await user_service.get_user_by_uid(uid, session)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return user
+
 @auth_router.post("/login")
 async def login(user_data: UserLoginModel, session: AsyncSession = Depends(get_session)):
     email = user_data.email

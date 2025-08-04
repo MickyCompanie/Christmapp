@@ -1,8 +1,13 @@
 from .models import User
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
+from sqlalchemy.orm import selectinload
 from .schemas import UserCreateModel
+from src.person.service import PersonService
+from src.person.schemas import PersonCreateModel
 from .utils import generate_password_hash
+
+person_service = PersonService()
 
 class UserService:
     async def get_all_users(self, session: AsyncSession) -> list[User]:
@@ -18,6 +23,13 @@ class UserService:
 
         return result.scalar_one_or_none()
 
+    async def get_user_by_uid(self, uid: str, session: AsyncSession) -> User | None:
+        """Fetch a user by UID."""
+        statement = select(User).options(selectinload(User.person)).where(User.uid == uid)
+        result = await session.execute(statement)
+
+        return result.scalar_one_or_none()
+
     async def user_exists(self, email: str, session: AsyncSession) -> bool:
         """Check if a user exists by email."""
         user = await self.get_user_by_email(email, session)
@@ -28,10 +40,14 @@ class UserService:
         """Create a new user."""
         user_data_dict = user_data.model_dump()
 
+        new_person = await person_service.create_person(PersonCreateModel(email=user_data_dict['email']), session)
+        user_data_dict["person_uid"] = new_person.uid
+
         new_user = User(**user_data_dict)
 
-        new_user.pasword_hash = generate_password_hash(user_data_dict['password'])
+        new_user.password_hash = generate_password_hash(user_data_dict['password'])
 
+    
         session.add(new_user)
         await session.commit()
         return new_user
