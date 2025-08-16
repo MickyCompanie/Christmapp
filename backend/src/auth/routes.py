@@ -54,6 +54,20 @@ async def login(user_data: UserLoginModel, session: AsyncSession = Depends(get_s
 
 @auth_router.get("/refresh_token")
 async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer())):
+    expiery_timestamp = token_details["exp"]
+    print(f"token details: {token_details}")
+
+    if datetime.fromtimestamp(token_details["exp"]) > datetime.now():
+        new_access_token = create_access_token(user_data=token_details["user"])
+
+        return JSONResponse(
+            content={
+                "access_token": new_access_token
+            },
+            status_code=status.HTTP_200_OK
+        )
+    else:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Refresh token has expired.")
 
     return {}
    
