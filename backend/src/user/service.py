@@ -77,3 +77,16 @@ class UserService:
         session.add(new_user)
         await session.commit()
         return await self.get_user_by_uid(new_user.uid, session)
+    
+    
+    async def delete_user(self, uid: str, session: AsyncSession) -> bool:
+        """Delete a user."""
+        user_to_delete = await self.get_user_by_uid(uid, session)
+
+        if user_to_delete:
+            await session.delete(user_to_delete)
+            await session.commit()
+
+            return True
+        else:
+            return False
