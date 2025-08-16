@@ -36,3 +36,11 @@ async def update_person(uid: str, person_data: PersonUpdateModel, session: Async
     if not updated_person:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Person not found")
     return updated_person
+
+@person_router.delete("/{uid}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_person(uid: str, session: AsyncSession = Depends(get_session)):
+    """Delete a person by UID."""
+    deleted = await user_service.delete_person(uid, session)
+    if not deleted:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Person not found")
+    return {"detail": "Person deleted successfully"}

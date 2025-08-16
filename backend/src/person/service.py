@@ -17,6 +17,12 @@ class PersonService:
         statement = select(Person).where(Person.uid == uid)
         result = await session.execute(statement)
         return result.scalar_one_or_none()
+    
+    async def get_person_by_email(self, email: str, session: AsyncSession) -> Person | None:
+        """Fetch a person by email."""
+        statement = select(Person).where(Person.email == email)
+        result = await session.execute(statement)
+        return result.scalar_one_or_none()
 
     async def create_person(self, person_data: PersonCreateModel, session: AsyncSession) -> Person:
         """Create a new person."""
@@ -46,3 +52,14 @@ class PersonService:
             return person_to_update
         else:
             return None
+        
+    async def delete_person(self, uid: str, session: AsyncSession) -> bool:
+        """Delete a person by UID."""
+        person_to_delete = await self.get_person_by_uid(uid, session)
+
+        if person_to_delete:
+            session.delete(person_to_delete)
+            session.commit()
+            return True
+        else:
+            return False

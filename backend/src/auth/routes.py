@@ -1,15 +1,18 @@
 from fastapi import APIRouter, Depends, status
-from .schemas import UserCreateModel, UserReadModel, UserLoginModel
-from .service import UserService
+from src.user.schemas import UserCreateModel, UserReadModel, UserLoginModel
+from src.user.service import UserService
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.exceptions import HTTPException
 from.utils import create_access_token, decode_access_token, verify_password
 from datetime import timedelta
 from fastapi.responses import JSONResponse
+from src.auth.depedencies import RefreshTokenBearer, AccessTokenBearer
+from datetime import datetime
 
 auth_router = APIRouter()
 user_service = UserService()
+access_token_bearer = AccessTokenBearer()
 
 REFRESH_TOKEN_EXPIRY = 2
 
@@ -22,20 +25,7 @@ async def create_user_account(user_data: UserCreateModel, session: AsyncSession 
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="User with this email already exists." )
     
     new_user = await user_service.create_user(user_data, session)
-
     return new_user
-
-@auth_router.get("/")
-async def get_users(session: AsyncSession = Depends(get_session)):
-    user_list = await user_service.get_all_users(session)
-    return user_list
-
-@auth_router.get("/{uid}", response_model=UserReadModel, status_code=status.HTTP_200_OK)
-async def get_user_by_uid(uid: str, session: AsyncSession = Depends(get_session)):
-    user = await user_service.get_user_by_uid(uid, session)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-    return user
 
 @auth_router.post("/login")
 async def login(user_data: UserLoginModel, session: AsyncSession = Depends(get_session)):
@@ -61,3 +51,9 @@ async def login(user_data: UserLoginModel, session: AsyncSession = Depends(get_s
                 status_code=status.HTTP_200_OK
             )
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid email or password.")
+
+@auth_router.get("/refresh_token")
+async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer())):
+
+    return {}
+   
