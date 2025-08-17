@@ -3,6 +3,7 @@ from fastapi.security import HTTPBearer
 from fastapi.exceptions import HTTPException
 from fastapi.security.http import HTTPAuthorizationCredentials
 from src.auth.utils import decode_access_token
+from src.db.redis import add_jti_to_block_list, token_in_block_list
 
 class TokenBearer(HTTPBearer):
 
@@ -23,6 +24,12 @@ class TokenBearer(HTTPBearer):
                     "resolution":"Please get new token"
                 }
             )
+        
+        if await token_in_block_list(token_data["jti"]):
+            raise HTTPException( status_code=status.HTTP_403_FORBIDDEN, detail={
+                "error": "This token has been revoked",
+                "resolution": "Please get a new token"
+                })
 
 
         self.verify_token_data(token_data)
