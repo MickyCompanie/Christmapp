@@ -5,13 +5,14 @@ from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.exceptions import HTTPException
 
-from src.auth.depedencies import AccessTokenBearer
+from src.auth.depedencies import AccessTokenBearer, RoleChecker
 
 person_router = APIRouter()
 user_service = PersonService()
 access_token_bearer = AccessTokenBearer()
+role_checker = Depends(RoleChecker(allowed_roles=["admin", "user"]))
 
-@person_router.get("/")
+@person_router.get("/", dependencies=[role_checker])
 async def get_persons(session: AsyncSession = Depends(get_session), user_details=Depends(access_token_bearer)):
     persons_list = await user_service.get_all_persons(session)
     return persons_list

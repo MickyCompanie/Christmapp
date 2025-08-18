@@ -27,8 +27,7 @@ url = f"/{prefix}{version}"
 app = FastAPI(
     title="Christmapp API",
     description="API for the Christmapp application",
-    version=version,
-
+    version=version
 )
 
 app.include_router(user_router, prefix=f"{url}/users", tags=["users"])

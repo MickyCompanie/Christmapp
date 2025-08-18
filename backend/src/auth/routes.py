@@ -7,13 +7,14 @@ from fastapi.exceptions import HTTPException
 from.utils import create_access_token, decode_access_token, verify_password
 from datetime import timedelta
 from fastapi.responses import JSONResponse
-from src.auth.depedencies import RefreshTokenBearer, AccessTokenBearer
+from src.auth.depedencies import RefreshTokenBearer, AccessTokenBearer, get_current_user, RoleChecker
 from datetime import datetime
 from src.db.redis import add_jti_to_block_list
 
 auth_router = APIRouter()
 user_service = UserService()
 access_token_bearer = AccessTokenBearer()
+role_checker = RoleChecker(allowed_roles=["admin", "user"])
 
 REFRESH_TOKEN_EXPIRY = 2
 
@@ -39,7 +40,7 @@ async def login(user_data: UserLoginModel, session: AsyncSession = Depends(get_s
         password_valid = verify_password(password, user.password_hash)
 
         if password_valid:
-            access_token = create_access_token(user_data={"user_uid": str(user.uid), "email": user.email})
+            access_token = create_access_token(user_data={"user_uid": str(user.uid), "email": user.email, "role": user.role})
             refresh_token = create_access_token(user_data={"user_uid": str(user.uid), "email": user.email}, refresh=True, expiry=timedelta(days=REFRESH_TOKEN_EXPIRY))
 
             return JSONResponse(
@@ -55,9 +56,6 @@ async def login(user_data: UserLoginModel, session: AsyncSession = Depends(get_s
 
 @auth_router.get("/refresh_token")
 async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer())):
-    expiery_timestamp = token_details["exp"]
-    print(f"token details: {token_details}")
-
     if datetime.fromtimestamp(token_details["exp"]) > datetime.now():
         new_access_token = create_access_token(user_data=token_details["user"])
 
@@ -70,6 +68,9 @@ async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer(
     else:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Refresh token has expired.")
 
+@auth_router.get("/me")
+async def get_current_user(user = Depends(get_current_user), _:bool = Depends(role_checker)):
+    return user
 
 @auth_router.get("/logout")
 async def logout(token_details: dict = Depends(access_token_bearer)):
