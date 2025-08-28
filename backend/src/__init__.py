@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from src.db.main import init_db
 from src.config import Config
@@ -33,6 +33,14 @@ app = FastAPI(
 app.include_router(user_router, prefix=f"{url}/users", tags=["users"])
 app.include_router(auth_router, prefix=f"{url}/auth", tags=["auth"])
 app.include_router(person_router, prefix=f"{url}/persons", tags=["persons"])
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[Config.FRONT_ORIGIN],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")

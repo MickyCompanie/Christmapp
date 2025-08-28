@@ -1,4 +1,4 @@
-import api from "../";
+import api from "..";
 
 export async function signup(email, password) {
     return await api.post("/auth/signup", {
@@ -11,11 +11,10 @@ export async function signup(email, password) {
     });
 }
 
-export async function signin(email, password) {
-    return await api.post("/auth/signin", {
-        email,
-        password,
-    }).then((response) => {
+export async function signin(payload) {
+    return await api.post("/auth/login", 
+        payload
+    ).then((response) => {
         return response;
     }).catch((error) => {
         console.error(error);
@@ -23,7 +22,7 @@ export async function signin(email, password) {
 }
 
 export async function getUser() {
-    return await api.get("/auth/user")
+    return await api.get("/auth/me")
     .then((response) => {
         return response;
     }).catch((error) => {

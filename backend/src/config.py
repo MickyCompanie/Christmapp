@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRY: int
     REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379
+    FRONT_ORIGIN: str = "http://localhost:5173"
 
     model_config = SettingsConfigDict(
         env_file=".env", 

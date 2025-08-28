@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Signin from '../src/pages/Signin.vue';
-import Signup from '../src/pages/Signup.vue';
-import SideBar from '../src/template/Sidebar.vue';
-import Home from '../src/pages/Home.vue';
-import User from '../src/pages/User.vue';
+import Signin from '../pages/Signin.vue';
+import Signup from '../pages/Signup.vue';
+import SideBar from '../template/Sidebar.vue';
+import Home from '../pages/Home.vue';
+import User from '../pages/User.vue';
 
 const routes = [
     {
@@ -22,7 +22,7 @@ const routes = [
         component: SideBar,
         children: [
             {
-                path: "",
+                path: "", 
                 name: "home",
                 component: Home,
             },
