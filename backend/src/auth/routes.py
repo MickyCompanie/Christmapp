@@ -68,7 +68,7 @@ async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer(
     else:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Refresh token has expired.")
 
-@auth_router.get("/me")
+@auth_router.get("/me", response_model=UserReadModel)
 async def get_current_user(user = Depends(get_current_user), _:bool = Depends(role_checker)):
     return user
 
