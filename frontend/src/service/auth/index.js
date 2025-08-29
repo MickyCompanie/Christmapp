@@ -30,17 +30,8 @@ export async function getUser() {
     });
 }
 
-export async function revokeToken(token) {
-    return await api.post("/auth/signout", token)
-    .then((response) => {
-        return response;
-    }).catch((error) => {
-        console.error(error);
-    });
-}
-
-export async function refreshToken(token) {
-    return await api.post("/auth/refresh", token)
+export async function revokeToken() {
+    return await api.get("/auth/logout")
     .then((response) => {
         return response;
     }).catch((error) => {
