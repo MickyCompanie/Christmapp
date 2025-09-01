@@ -7,10 +7,10 @@ import {
 
 import router from "@/router"
 
+
 export default {
     async signUp(payload) {
-        const response = await signup(payload);
-        
+        const response = await signup(payload)
     },
 
     async login(payload) {

@@ -1,13 +1,18 @@
 import api from "..";
+import { useNotificationsStore } from "@/stores/index.js";
 
-export async function signup(email, password) {
-    return await api.post("/auth/signup", {
-        email,
-        password,
-    }).then((response) => {
+export async function signup(payload) {
+    const notificationsStore = useNotificationsStore();
+
+    return await api.post("/auth/signup", payload)
+    .then((response) => {
         return response;
     }).catch((error) => {
-        console.error(error);
+        notificationsStore.setNotification({
+            message: error?.response?.data?.detail || null,
+            statusCode: error?.response?.status || 500
+        });
+        
     });
 }
 
