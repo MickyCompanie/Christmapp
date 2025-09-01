@@ -35,8 +35,8 @@ export default {
         return await revokeToken().then(() => {
             this.accessToken = null;
             this.refreshToken = null;
-            localStorage.setItem("accessToken", null);
-            localStorage.setItem("refreshToken", null);
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
 
             router.push({name: "signin"})
         })
