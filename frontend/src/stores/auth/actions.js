@@ -8,6 +8,11 @@ import {
 import router from "@/router"
 
 export default {
+    async signUp(payload) {
+        const response = await signup(payload);
+        
+    },
+
     async login(payload) {
         const response = await signin(payload);
         this.accessToken = response.data.access_token;
