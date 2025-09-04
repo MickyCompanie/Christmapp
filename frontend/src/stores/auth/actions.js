@@ -1,19 +1,19 @@
-import { 
-    signin,
-    signup,
-    revokeToken,
-    getUser
-} from "../../service/auth";
+import { signin, signup, revokeToken, getUser } from "../../service/auth";
+import { updatePerson } from "../../service/person";
 
 import router from "@/router"
 
 
 export default {
     async signUp(payload) {
-        const response = await signup(payload)
+        const response = await signup(payload).then((res) => {
+            this.login(payload)
+        })
+
+
     },
 
-    async login(payload) {
+    async login(payload, fromSignUp) {
         const response = await signin(payload);
         this.accessToken = response.data.access_token;
         this.refreshToken = response.data.refresh_token;
@@ -21,8 +21,7 @@ export default {
         localStorage.setItem("refreshToken", response.data.refresh_token);
         this.getCurrentUser();
 
-
-        router.push({name: "home"})
+        router.push({name: fromSignUp ? "profile" : "home"})
     },
 
 
@@ -40,5 +39,12 @@ export default {
 
             router.push({name: "signin"})
         })
-    } 
+    },
+
+    async proceedToUpdatePerson(payload){
+        return await updatePerson(payload).then((res) => {
+            this.user.person = res.data
+            router.push({name: "home"})
+        })
+    }
 };

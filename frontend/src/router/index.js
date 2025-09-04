@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores/index.js';
 
-import Signin from '../pages/Signin.vue';
-import Signup from '../pages/Signup.vue';
-import Template from '../template/Template.vue';
-import Home from '../pages/Home.vue';
-import User from '../pages/User.vue';
-import SignAll from '../template/SignAll.vue';
+import Signin from '@/pages/Signin.vue';
+import Signup from '@/pages/Signup.vue';
+import Template from '@/template/Template.vue';
+import Home from '@/pages/Home.vue';
+import User from '@/pages/User.vue';
+import SignAll from '@/template/SignAll.vue';
+import Profile from '@/pages/Profile.vue';
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
                 path: "", 
                 name: "home",
                 component: Home,
+            },
+            {
+                path: "profile",
+                name: "profile",
+                component: Profile
             },
             {
                 path: "user",

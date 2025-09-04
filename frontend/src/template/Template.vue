@@ -1,7 +1,11 @@
 <template>
-    <NavBar />
-    <Sidebar />
-    <router-view />
+    <div class="flex flex-col h-screen">
+        <NavBar />
+        <Sidebar />
+        <div class="bg-gray-900 flex-1 overflow-auto">
+            <router-view />
+        </div>
+    </div>
 </template>
 
 <script setup>
