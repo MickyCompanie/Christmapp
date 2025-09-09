@@ -10,6 +10,8 @@ from alembic import context
 from src.config import Config
 from src.user.models import User
 from src.person.models import Person
+from src.gift.models import Gift
+from src.gift_status.models import GiftStatus
 from sqlmodel import SQLModel
 
 

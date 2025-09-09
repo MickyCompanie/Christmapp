@@ -1,11 +1,11 @@
 from sqlmodel import SQLModel, Field, Column, Relationship, ForeignKey
 from sqlalchemy import UUID
-from typing import Optional
+from typing import Optional, List
 import sqlalchemy.dialects.postgresql as pg
 import uuid
 from datetime import datetime
 from src.user.models import User
-
+from src.gift.models import Gift
 
 class Person(SQLModel, table=True):
     __tablename__ = 'persons'
@@ -25,6 +25,14 @@ class Person(SQLModel, table=True):
     updated_at: datetime = Field(default_factory=datetime.now)
 
     user: Optional["User"] = Relationship(back_populates="person")
+    bought_gifts: List["Gift"] = Relationship(
+        back_populates="buyer",
+        sa_relationship_kwargs={"foreign_keys": "[Gift.buyer_uid]"}
+    )
+    received_gifts: List["Gift"] = Relationship(
+        back_populates="recipient",
+        sa_relationship_kwargs={"foreign_keys": "[Gift.recipient_uid]"}
+    )
 
     def __repr__(self):
         return f"<Person {self.uid}>"

@@ -7,6 +7,8 @@ from src.config import Config
 from src.user.routes import user_router
 from src.auth.routes import auth_router
 from src.person.routes import person_router
+from src.gift.routes import gift_router
+from src.gift_status.routes import gift_status_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,6 +35,9 @@ app = FastAPI(
 app.include_router(user_router, prefix=f"{url}/users", tags=["users"])
 app.include_router(auth_router, prefix=f"{url}/auth", tags=["auth"])
 app.include_router(person_router, prefix=f"{url}/persons", tags=["persons"])
+app.include_router(gift_router, prefix=f"{url}/gifts", tags=["gifts"])
+app.include_router(gift_status_router, prefix=f"{url}/gift-statuses", tags=["gift-statuses"])
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -45,4 +50,4 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"message": "Welcome to the Christmapp API!"}
