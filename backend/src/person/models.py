@@ -7,6 +7,7 @@ from datetime import datetime
 from src.user.models import User
 from src.gift.models import Gift
 from src.grocerie.models import Grocerie
+from src.wish.models import Wish
 
 class Person(SQLModel, table=True):
     __tablename__ = 'persons'
@@ -26,6 +27,7 @@ class Person(SQLModel, table=True):
     updated_at: datetime = Field(default_factory=datetime.now)
 
     user: Optional["User"] = Relationship(back_populates="person")
+    wishes: List["Wish"] = Relationship(back_populates="wisher")
     bought_gifts: List["Gift"] = Relationship(
         back_populates="buyer",
         sa_relationship_kwargs={"foreign_keys": "[Gift.buyer_uid]"}
