@@ -9,6 +9,8 @@ from src.auth.routes import auth_router
 from src.person.routes import person_router
 from src.gift.routes import gift_router
 from src.gift_status.routes import gift_status_router
+from src.grocerie.routes import grocerie_router
+from src.groceries_status.routes import groceries_status_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -37,6 +39,8 @@ app.include_router(auth_router, prefix=f"{url}/auth", tags=["auth"])
 app.include_router(person_router, prefix=f"{url}/persons", tags=["persons"])
 app.include_router(gift_router, prefix=f"{url}/gifts", tags=["gifts"])
 app.include_router(gift_status_router, prefix=f"{url}/gift-statuses", tags=["gift-statuses"])
+app.include_router(grocerie_router, prefix=f"{url}/groceries", tags=["groceries"])
+app.include_router(groceries_status_router, prefix=f"{url}/groceries-statuses", tags=["groceries-statuses"])
 
 
 app.add_middleware(

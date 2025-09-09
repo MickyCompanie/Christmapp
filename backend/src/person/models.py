@@ -6,6 +6,7 @@ import uuid
 from datetime import datetime
 from src.user.models import User
 from src.gift.models import Gift
+from src.grocerie.models import Grocerie
 
 class Person(SQLModel, table=True):
     __tablename__ = 'persons'
@@ -33,6 +34,7 @@ class Person(SQLModel, table=True):
         back_populates="recipient",
         sa_relationship_kwargs={"foreign_keys": "[Gift.recipient_uid]"}
     )
+    groceries: List["Grocerie"] = Relationship(back_populates="assigned_person")
 
     def __repr__(self):
         return f"<Person {self.uid}>"

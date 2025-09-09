@@ -12,6 +12,8 @@ from src.user.models import User
 from src.person.models import Person
 from src.gift.models import Gift
 from src.gift_status.models import GiftStatus
+from src.grocerie.models import Grocerie
+from src.groceries_status.models import GroceriesStatus
 from sqlmodel import SQLModel
 
 
