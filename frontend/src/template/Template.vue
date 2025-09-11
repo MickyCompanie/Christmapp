@@ -11,4 +11,11 @@
 <script setup>
 import NavBar from '@/template/NavBar.vue';
 import Sidebar from './Sidebar.vue';
+import { onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+
+onMounted(() => {
+    const authStore = useAuthStore();
+    authStore.getCurrentUser();
+});
 </script>
