@@ -16,7 +16,8 @@ async def get_wishes(session: AsyncSession = Depends(get_session)):
     wish_list = await wish_service.get_all_wishes(session)
 
     return {
-        "tableHeads": ["Title", "Description", "Wisher", "Created At", "Updated At"],
+        "tableHeads": ["title", "creation", "last update", "edit", "delete"],
+        "attributes": ["title", "created_at", "updated_at"],
         "wishes": wish_list
     }
 

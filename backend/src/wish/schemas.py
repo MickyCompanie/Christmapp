@@ -13,6 +13,7 @@ class WishReadModel(BaseModel):
 
 class WishesTableModel(BaseModel):
     tableHeads: list[str] 
+    attributes: list[str]
     wishes: list[WishReadModel]
 
 class WishCreateModel(BaseModel):
