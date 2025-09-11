@@ -4,10 +4,9 @@
       <ul class="space-y-2 font-medium">
          <SideBarLink 
             v-for="item in sideBar" 
-            :key="item.routeName" 
             :title="item.title" 
             :routeName="item.routeName" 
-            :svgPath="item.svgPath"
+            :icon="item.icon"
          />
       </ul>
    </div>
@@ -15,6 +14,7 @@
 </template>
 
 <script setup>
+import { GiftIcon, ShoppingCartIcon, SparklesIcon } from '@heroicons/vue/24/solid'
 import { sideBar } from '@/enums/sideBar.js'
 import SideBarLink from "@/components/SideBarLink.vue"
 </script>
