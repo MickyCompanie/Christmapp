@@ -11,10 +11,13 @@ class WishReadModel(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+class WishesTableModel(BaseModel):
+    tableHeads: list[str] 
+    wishes: list[WishReadModel]
+
 class WishCreateModel(BaseModel):
     title: str = Field(..., max_length=100)
     description: Optional[str] = Field(default=None, max_length=500)
-    wisher_uid: uuid.UUID
 
 class WishUpdateModel(BaseModel):
     title: Optional[str] = Field(default=None, max_length=100)

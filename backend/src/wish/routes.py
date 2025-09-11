@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from .schemas import WishReadModel, WishCreateModel, WishUpdateModel
+from .schemas import WishReadModel, WishCreateModel, WishUpdateModel, WishesTableModel
 from .service import WishService
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,10 +11,14 @@ wish_service = WishService()
 access_token_bearer = AccessTokenBearer()
 
 
-@wish_router.get("/")
+@wish_router.get("/", response_model=WishesTableModel, status_code=status.HTTP_200_OK)
 async def get_wishes(session: AsyncSession = Depends(get_session)):
     wish_list = await wish_service.get_all_wishes(session)
-    return wish_list
+
+    return {
+        "tableHeads": ["Title", "Description", "Wisher", "Created At", "Updated At"],
+        "wishes": wish_list
+    }
 
 @wish_router.get("/{uid}", response_model=WishReadModel, status_code=status.HTTP_200_OK)
 async def get_wish(uid: str, session: AsyncSession = Depends(get_session)):
