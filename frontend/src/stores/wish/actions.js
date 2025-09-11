@@ -5,7 +5,9 @@ import router from "@/router"
 export default {
     async getAllWishesAction() {
         return await getAllWishes().then((res) => {
-            console.log(res.data);
+            this.wishes = res.data.wishes;
+            this.tableHeads = res.data.tableHeads;
+            this.attributes = res.data.attributes;
         })
     },
 
