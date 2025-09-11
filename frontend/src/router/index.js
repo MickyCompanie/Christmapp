@@ -8,6 +8,9 @@ import Home from '@/pages/Home.vue';
 import User from '@/pages/User.vue';
 import SignAll from '@/template/SignAll.vue';
 import Profile from '@/pages/Profile.vue';
+import GroceriesList from '@/pages/GroceriesList.vue';
+import WishesList from '@/pages/WishesList.vue';
+import GiftsList from '@/pages/GiftsList.vue';
 
 const routes = [
     {
@@ -24,6 +27,21 @@ const routes = [
                 path: "profile",
                 name: "profile",
                 component: Profile
+            },
+            {
+                path: "wishes",
+                name: "wisheslist",
+                component: WishesList,
+            },
+            {
+                path: "gifts",
+                name: "giftlist",
+                component: GiftsList,
+            },
+            {
+                path: "groceries",
+                name: "grocerieslist",
+                component: GroceriesList,
             },
             {
                 path: "user",
