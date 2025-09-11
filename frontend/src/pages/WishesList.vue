@@ -11,7 +11,7 @@
             </div>
 
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-4">
-                <TableStriped />
+                <TableStriped :table-heads="wishesStore.getTableHeads" :attributes="wishesStore.getAttributes"/>
             </div>
         </Card>
     </Page>
