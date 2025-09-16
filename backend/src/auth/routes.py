@@ -79,8 +79,9 @@ async def logout(token_details: dict = Depends(access_token_bearer)):
     await add_jti_to_block_list(jti)
 
     return JSONResponse(
-        content={"message": "Logout successful."},
-        status_code=status.HTTP_200_OK)
+            content={"message": "Logout successful."},
+            status_code=status.HTTP_200_OK
+        )
 
 
 

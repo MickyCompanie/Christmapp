@@ -11,6 +11,10 @@ class WishReadModel(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+class EmptyWishModel(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+
 class WishesTableModel(BaseModel):
     tableHeads: list[str] 
     attributes: list[str]

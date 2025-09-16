@@ -17,14 +17,15 @@ class WishService:
         result = await session.execute(statement)
         return result.scalar_one_or_none()
     
-    async def create_wish(self, wish_data: WishCreateModel, session: AsyncSession) -> Wish:
+    async def create_wish(self, wish_data: WishCreateModel, session: AsyncSession, user_details: dict) -> Wish:
         """Create a new wish."""
         wish_data_dict = wish_data.model_dump()
 
-        new_wish = Wish(**wish_data_dict)
+        new_wish = Wish(**wish_data_dict, wisher_uid = user_details.person.uid)
 
         session.add(new_wish)
         await session.commit()
+        await session.refresh(new_wish)
         return new_wish
     
     async def update_wish(self, uid: str, wish_data: WishUpdateModel, session: AsyncSession) -> Wish:
@@ -51,8 +52,8 @@ class WishService:
         wish_to_delete = await self.get_wish_by_uid(uid, session)
 
         if wish_to_delete:
-            session.delete(wish_to_delete)
-            session.commit()
+            await session.delete(wish_to_delete)
+            await session.commit()
             return True
         else:
             return False

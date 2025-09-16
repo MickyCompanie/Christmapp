@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, status
-from .schemas import WishReadModel, WishCreateModel, WishUpdateModel, WishesTableModel
+from .schemas import WishReadModel, WishCreateModel, WishUpdateModel, WishesTableModel, EmptyWishModel
 from .service import WishService
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.exceptions import HTTPException
-from src.auth.depedencies import AccessTokenBearer
+from src.auth.depedencies import AccessTokenBearer, get_current_user
 
 wish_router = APIRouter()
 wish_service = WishService()
@@ -21,6 +21,10 @@ async def get_wishes(session: AsyncSession = Depends(get_session)):
         "wishes": wish_list
     }
 
+@wish_router.get("/empty", response_model=EmptyWishModel, status_code=status.HTTP_200_OK)
+async def get_empty_wish():
+    return EmptyWishModel()
+
 @wish_router.get("/{uid}", response_model=WishReadModel, status_code=status.HTTP_200_OK)
 async def get_wish(uid: str, session: AsyncSession = Depends(get_session)):
     wish = await wish_service.get_wish_by_uid(uid, session)
@@ -29,9 +33,9 @@ async def get_wish(uid: str, session: AsyncSession = Depends(get_session)):
     return wish
 
 @wish_router.post("/", response_model=WishReadModel, status_code=status.HTTP_201_CREATED)
-async def create_wish(wish_data: WishCreateModel, session: AsyncSession = Depends(get_session)):
+async def create_wish(wish_data: WishCreateModel, session: AsyncSession = Depends(get_session), user_details = Depends(get_current_user)):
     """Create a new wish."""
-    new_wish = await wish_service.create_wish(wish_data, session)
+    new_wish = await wish_service.create_wish(wish_data, session, user_details)
     return new_wish
 
 @wish_router.patch("/{uid}", response_model=WishReadModel, status_code=status.HTTP_200_OK)
