@@ -10,6 +10,8 @@ import SignAll from '@/template/SignAll.vue';
 import Profile from '@/pages/Profile.vue';
 import GroceriesList from '@/pages/GroceriesList.vue';
 import WishesList from '@/pages/WishesList.vue';
+import WishDetail from '@/pages/WishDetail.vue';
+import WishCreate from '@/pages/WishCreate.vue';
 import GiftsList from '@/pages/GiftsList.vue';
 
 const routes = [
@@ -32,6 +34,16 @@ const routes = [
                 path: "wishes",
                 name: "wisheslist",
                 component: WishesList,
+            },
+            {
+                path: "wish/:uid",
+                name: "wishDetail",
+                component: WishDetail,
+            },
+            {
+                path: "wish/create",
+                name: "wishCreate",
+                component: WishCreate,
             },
             {
                 path: "gifts",

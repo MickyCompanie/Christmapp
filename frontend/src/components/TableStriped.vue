@@ -37,38 +37,20 @@ defineProps({
     tableHeads: {
         type: Array,
         required: false,
-        default: () => ["Title", "Description", "Wisher", "Created At", "Updated At"]
+        default: () => ["Title", "Created At", "Updated At", "Edit", "Delete"]
     },
     tableData: {
         type: Array,
-        required: false,
-        default: () => ([
-            {
-                uid: 1,
-                title: "Sample Wish 1",
-                description: "This is a sample wish description.",
-                created_at: "2023-10-01",
-                updated_at: "2023-10-02"
-            },
-            {
-                uid: 2,
-                title: "Sample Wish 2",
-                description: "This is another sample wish description.",
-                wisher: "60235199-6bf2-43cc-a22a-a19f7ef46d35",
-                created_at: "2023-10-03",
-                updated_at: "2023-10-04"
-            }
-        ])
+        required: true,
     },
     attributes: {
         type: Array,
         required: false,
-        default: () => ["title", "description", "wisher", "createdAt", "updatedAt"]
+        default: () => ["title", "description", "createdAt", "updatedAt"]
     },
     ownerAttribute: {
         type: String,
-        required: false,
-        default: "wisher"
+        required: true,
     }
 });
 

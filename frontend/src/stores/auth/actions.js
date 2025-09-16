@@ -26,8 +26,11 @@ export default {
 
 
     async getCurrentUser() {
-        const response = await getUser();
-        this.user = response.data;
+        return await getUser().then((response) => {
+            this.user = response.data
+        }).catch(() => {
+            this.logout()
+        });
     },
 
     async logout() {

@@ -16,7 +16,9 @@
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-4">
                 <TableStriped 
                     :table-heads="wishesStore.getTableHeads" 
+                    :table-data="wishesStore.getWishes"
                     :attributes="wishesStore.getAttributes"
+                    ownerAttribute="wisher_uid"
                     @click:row="onRowClick"                
                     @click:edit="onEdit"
                     @click:delete="onDelete"
@@ -31,6 +33,7 @@ import { SparklesIcon, PlusIcon } from '@heroicons/vue/24/solid';
 
 import { useWishStore } from '@/stores/wish';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import Page from '../template/Page.vue';
 import Card from '../template/Card.vue';
@@ -38,22 +41,22 @@ import TableStriped from '../components/TableStriped.vue';
 import ButtonCustom from '../components/ButtonCustom.vue';
 
 const wishesStore = useWishStore();
+const router = useRouter();
 
 function onAddWish() {
-  console.log("Navigate to add wish page")
-  showModal();
+    router.push({ name: 'wishCreate' });
 }
 
 function onRowClick(uid) {
-  console.log("Navigate to wish with UID:", uid)
+    console.log("Navigate to wish with UID:", uid)
 }
 
 function onEdit(uid) {
-  console.log("Edit wish with UID:", uid)
+    console.log("Edit wish with UID:", uid)
+    router.push({ name: 'wishDetail', params: { uid: uid } });
 }
 
 function onDelete(uid) {
-  console.log("Delete wish with UID:", uid)
   wishesStore.deleteWishAction(uid);
 }
 
