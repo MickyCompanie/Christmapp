@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_serializer
 from typing import Optional
 import uuid
 from datetime import datetime
@@ -10,6 +10,10 @@ class WishReadModel(BaseModel):
     wisher_uid: uuid.UUID
     created_at: datetime
     updated_at: datetime
+
+    @field_serializer("created_at", "updated_at")
+    def format_datetime(self, dt: datetime) -> str:
+        return dt.strftime("%d/%m/%Y")
 
 class EmptyWishModel(BaseModel):
     title: Optional[str] = None
