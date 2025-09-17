@@ -7,7 +7,7 @@ from datetime import datetime
 class WishService:
     async def get_all_wishes(self, session: AsyncSession) -> list[Wish]:
         """Fetch all wishes."""
-        statement = select(Wish)
+        statement = select(Wish).order_by(Wish.created_at.desc())
         result = await session.execute(statement)
         return result.scalars().all()
 
