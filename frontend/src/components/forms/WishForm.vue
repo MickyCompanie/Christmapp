@@ -17,7 +17,7 @@
     </div>
 
     <div class="w-full flex justify-end px-4 pt-8 md:px-8">
-        <ButtonCustom title="Make A Wish" @click="$emit('submit')" />
+        <ButtonCustom :title="buttonTitle" @click="$emit('submit')" />
      </div>
 
 </template>
@@ -33,6 +33,11 @@ defineProps({
     wish: {
         type: Object,
         required: true
+    },
+    buttonTitle: {
+        type: String,
+        required: false,
+        default: "Make A Wish"
     }
 });
 

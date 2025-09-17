@@ -1,11 +1,12 @@
 <template>
-    <Page>
+<Page>
         <Card>
             <CardHeader :showBackButton="true" />
             <WishForm 
                 v-if="wish"
                 :wish="wish"
-                @submit="onWishCreate()"
+                :buttonTitle="'Update Wish'"
+                @submit="onWishUpdate()"
             />
         </Card>
     </Page>
@@ -14,6 +15,7 @@
 <script setup>
 import { useWishStore } from '@/stores/wish';
 import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 import Page from '../template/Page.vue';
 import Card from '../template/Card.vue';
@@ -23,14 +25,17 @@ import WishForm from '../components/forms/WishForm.vue';
 const wishesStore = useWishStore();
 
 let wish = ref(null);
+let route = useRoute();
 
-function onWishCreate() {
-    wishesStore.createWishAction(wish.value);  
+function onWishUpdate() {
+    wishesStore.updateWishAction(wish.value);  
 }
 
 onMounted(async () => {
-    await wishesStore.getEmptyWishAction();
-    wish.value = { ...wishesStore.wish }
+    await wishesStore.getSpecificWishAction(route.params.uid);
+    if (wishesStore.wish) {
+        wish.value = { ...wishesStore.wish }
+    }
 });
 
 </script>

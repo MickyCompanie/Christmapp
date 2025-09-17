@@ -15,6 +15,7 @@
 
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-4">
                 <TableStriped 
+                    v-if="wishesStore.getWishes.length > 0"
                     :table-heads="wishesStore.getTableHeads" 
                     :table-data="wishesStore.getWishes"
                     :attributes="wishesStore.getAttributes"
@@ -52,8 +53,7 @@ function onRowClick(uid) {
 }
 
 function onEdit(uid) {
-    console.log("Edit wish with UID:", uid)
-    router.push({ name: 'wishDetail', params: { uid: uid } });
+    router.push({ name: 'wishEdit', params: { uid: uid } });
 }
 
 function onDelete(uid) {
@@ -62,6 +62,7 @@ function onDelete(uid) {
 
 onMounted(() => {
     wishesStore.getAllWishesAction();
+    wishesStore.resetWish();
 });
 
 </script>

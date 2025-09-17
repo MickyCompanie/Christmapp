@@ -13,6 +13,10 @@ export default {
         })
     },
 
+    async resetWish(){
+        this.wish = null;
+    },
+
     async getSpecificWishAction(payload) {
         return await getSpecificWish(payload).then((res) => {
             this.wish = res.data;
@@ -45,10 +49,20 @@ export default {
     },
 
     async updateWishAction(payload) {
-        return await updateWish(payload).then((res) => {
-            console.log(res.data);
-        }).catch((error) => {
+        const notificationsStore = useNotificationsStore();
 
+        return await updateWish(payload).then((res) => {
+            router.push({name: "wisheslist"})
+
+            notificationsStore.setNotification({
+            message: res?.data?.detail || "Wish updated successfully",
+            statusCode: res?.status || 201
+            })
+        }).catch((error) => {
+            notificationsStore.setNotification({
+                message: error?.response?.data?.detail || null,
+                statusCode: error?.response?.status || 500
+            });
         })
     },
 
