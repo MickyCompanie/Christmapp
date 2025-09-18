@@ -10,7 +10,7 @@ import SignAll from '@/template/SignAll.vue';
 import Profile from '@/pages/Profile.vue';
 import GroceriesList from '@/pages/GroceriesList.vue';
 import WishesList from '@/pages/WishesList.vue';
-import WishEdit from '../pages/WishEdit.vue';
+import WishEdit from '../pages/wish/WishEdit.vue';
 import WishCreate from '@/pages/WishCreate.vue';
 import Settings from '../template/Settings.vue';
 import GiftsList from '@/pages/GiftsList.vue';
