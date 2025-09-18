@@ -4,17 +4,13 @@
       <ul class="space-y-2 font-medium">
          <SideBarLink 
             v-if="user?.role === 'user' || user?.role === 'admin'"
-            v-for="item in sideBar" 
-            :title="item.title" 
-            :routeName="item.routeName" 
-            :icon="item.icon"
+            v-for="item in sideBar"
+            :item="item"
          />
          <SideBarLink 
             v-if="user?.role === 'admin'"
             v-for="item in sideBarSettings" 
-            :title="item.title" 
-            :routeName="item.routeName" 
-            :icon="item.icon"
+            :item="item"
          />
       </ul>
    </div>
