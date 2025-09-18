@@ -3,7 +3,15 @@
    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
          <SideBarLink 
+            v-if="user?.role === 'user' || user?.role === 'admin'"
             v-for="item in sideBar" 
+            :title="item.title" 
+            :routeName="item.routeName" 
+            :icon="item.icon"
+         />
+         <SideBarLink 
+            v-if="user?.role === 'admin'"
+            v-for="item in sideBarSettings" 
             :title="item.title" 
             :routeName="item.routeName" 
             :icon="item.icon"
@@ -14,7 +22,11 @@
 </template>
 
 <script setup>
-import { GiftIcon, ShoppingCartIcon, SparklesIcon } from '@heroicons/vue/24/solid'
-import { sideBar } from '@/enums/sideBar.js'
+import { sideBar, sideBarSettings } from '@/enums/sideBar.js'
+
 import SideBarLink from "@/components/SideBarLink.vue"
+
+defineProps({
+   user: Object
+})
 </script>

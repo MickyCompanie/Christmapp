@@ -1,4 +1,4 @@
-import { GiftIcon, ShoppingCartIcon, SparklesIcon } from '@heroicons/vue/24/solid'
+import { GiftIcon, ShoppingCartIcon, SparklesIcon, AdjustmentsHorizontalIcon } from '@heroicons/vue/24/solid'
 
 export const sideBar = [
     {
@@ -15,5 +15,13 @@ export const sideBar = [
         title: "groceries",
         routeName: "grocerieslist",
         icon: ShoppingCartIcon,
+    },
+]
+
+export  const sideBarSettings = [
+    {
+        title: "settings",
+        routeName: "giftStatusList",
+        icon: AdjustmentsHorizontalIcon,
     },
 ]

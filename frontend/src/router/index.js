@@ -10,10 +10,16 @@ import SignAll from '@/template/SignAll.vue';
 import Profile from '@/pages/Profile.vue';
 import GroceriesList from '@/pages/GroceriesList.vue';
 import WishesList from '@/pages/WishesList.vue';
-import WishDetail from '@/pages/WishDetail.vue';
 import WishEdit from '../pages/WishEdit.vue';
 import WishCreate from '@/pages/WishCreate.vue';
+import Settings from '../template/Settings.vue';
 import GiftsList from '@/pages/GiftsList.vue';
+import GiftStatusList from '../pages/giftStatus/GiftStatusList.vue';
+import GiftStatusCreate from '@/pages/giftStatus/GiftStatusCreate.vue'
+import GiftStatusEdit from '../pages/giftStatus/GiftStatusEdit.vue';
+import GroceriesStatusList from '../pages/groceriesStatus/GroceriesStatusList.vue';
+import GroceriesStatusCreate from '../pages/groceriesStatus/GroceriesStatusCreate.vue';
+import GroceriesStatusEdit from '../pages/groceriesStatus/GroceriesStatusEdit.vue';
 
 const routes = [
     {
@@ -65,6 +71,44 @@ const routes = [
                 path: "user/:id",
                 name: "userDetail",
                 component: User,
+            },
+            {
+                path: "settings",
+                name: "settings",
+                component: Settings,
+                children: [
+                    {
+                        path: "gift_status",
+                        name: "giftStatusList",
+                        component: GiftStatusList,
+                    },
+                    {
+                        path: "gift_status/create",
+                        name: "giftStatusCreate",
+                        component: GiftStatusCreate,
+                    },
+                    {
+                        path: "gift_status/:uid",
+                        name: "giftStatusEdit",
+                        component: GiftStatusEdit,
+                    },
+                    {
+                        path: "groceries_status",
+                        name: "groceriesStatusList",
+                        component: GroceriesStatusList,
+                    },
+                    {
+                        path: "groceries_status/create",
+                        name: "groceriesStatusCreate",
+                        component: GroceriesStatusCreate,
+                    },
+                    {
+                        path: "groceries_status/:uid",
+                        name: "groceriesStatusEdit",
+                        component: GroceriesStatusEdit,
+                    },
+                    
+                ]
             },
         ]
     },
