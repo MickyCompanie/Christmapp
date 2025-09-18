@@ -1,35 +1,47 @@
 <template>
-    <Page>
-        <Card>
-           <div class="select-none flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                <div class="flex gap-x-4 ">
-                    <SparklesIcon class="w-8 h-8 text-blue-400text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"/>
-                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Wish
-                    </h5>
-                </div>
-                <div>
-                    <ButtonCustom title="Make A Wish" @click="onAddWish()" />
-                </div>
-            </div>
-        </Card>
-    </Page>
+  <div v-if="wishesStore.getWish" class="space-y-6 p-4">
+    
+    <div class="flex items-center gap-3">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+        {{ wishesStore.getWish.title }}
+      </h2>
+    </div>
+
+    
+    <div>
+      <p class="text-base leading-relaxed text-gray-600 dark:text-gray-400">
+        {{ wishesStore.getWish.description }}
+      </p>
+    </div>
+
+    <!--
+    <div>
+      <p class="text-base text-gray-600 dark:text-gray-400">
+        {{ wishesStore.getWish.someOtherField }}
+      </p>
+    </div>
+    -->
+  </div>
 </template>
+
 
 <script setup>
 
 import { useWishStore } from '@/stores/wish';
 import { onMounted } from 'vue';
 
-import Page from '../template/Page.vue';
-import Card from '../template/Card.vue';
-import ButtonCustom from '../components/ButtonCustom.vue';
+const props = defineProps({
+    wishUid: {
+        type: String,
+        required: true
+    }
+})
 
 const wishesStore = useWishStore();
 
 
-onMounted(() => {
-    wishesStore.getAllWishesAction();
+onMounted(async () => {
+    await wishesStore.getSpecificWishAction(props.wishUid);
 });
 
 </script>

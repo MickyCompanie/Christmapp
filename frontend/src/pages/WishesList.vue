@@ -26,6 +26,15 @@
                 />
             </div>
         </Card>
+        <ModalWrapper
+            :is-modal-open="isModalOpen"
+            :footer="true"
+            @modal-close="onModalClose"
+        >
+            <WishDetail 
+                :wish-uid="selectedWishUid"
+            />
+        </ModalWrapper>
     </Page>
 </template>
 
@@ -38,18 +47,30 @@ import { useRouter } from 'vue-router';
 
 import Page from '../template/Page.vue';
 import Card from '../template/Card.vue';
+import ModalWrapper from '../components/ModalWrapper.vue';
+import WishDetail from './WishDetail.vue';
 import TableStriped from '../components/TableStriped.vue';
 import ButtonCustom from '../components/ButtonCustom.vue';
 
 const wishesStore = useWishStore();
 const router = useRouter();
 
+const isModalOpen = ref(false);
+const selectedWishUid = ref(null);
+
+
 function onAddWish() {
     router.push({ name: 'wishCreate' });
 }
 
 function onRowClick(uid) {
-    console.log("Navigate to wish with UID:", uid)
+  selectedWishUid.value = uid;
+  isModalOpen.value = true;
+}
+
+function onModalClose() {
+    isModalOpen.value = false;
+    wishesStore.resetWish()
 }
 
 function onEdit(uid) {
