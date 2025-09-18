@@ -45,12 +45,12 @@ import { useWishStore } from '@/stores/wish';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import Page from '../template/Page.vue';
-import Card from '../template/Card.vue';
-import ModalWrapper from '../components/ModalWrapper.vue';
-import WishDetail from './WishDetail.vue';
-import TableStriped from '../components/TableStriped.vue';
-import ButtonCustom from '../components/ButtonCustom.vue';
+import Page from '@/template/Page.vue';
+import Card from '@/template/Card.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue';
+import WishDetail from '@/pages/wish/WishDetail.vue';
+import TableStriped from '@/components/TableStriped.vue';
+import ButtonCustom from '@/components/ButtonCustom.vue';
 
 const wishesStore = useWishStore();
 const router = useRouter();

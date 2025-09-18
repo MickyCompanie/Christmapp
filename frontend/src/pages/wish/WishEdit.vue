@@ -17,10 +17,10 @@ import { useWishStore } from '@/stores/wish';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import Page from '../template/Page.vue';
-import Card from '../template/Card.vue';
-import CardHeader from '../components/CardHeader.vue';
-import WishForm from '../components/forms/WishForm.vue';
+import Page from '@/template/Page.vue';
+import Card from '@/template/Card.vue';
+import CardHeader from '@/components/CardHeader.vue';
+import WishForm from '@/components/forms/WishForm.vue';
 
 const wishesStore = useWishStore();
 

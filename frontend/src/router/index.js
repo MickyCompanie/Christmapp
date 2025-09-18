@@ -8,12 +8,12 @@ import Home from '@/pages/Home.vue';
 import User from '@/pages/User.vue';
 import SignAll from '@/template/SignAll.vue';
 import Profile from '@/pages/Profile.vue';
-import GroceriesList from '@/pages/GroceriesList.vue';
-import WishesList from '@/pages/WishesList.vue';
+import GroceriesList from '@/pages/groceries/GroceriesList.vue';
+import WishesList from '@/pages/wish/WishesList.vue';
 import WishEdit from '../pages/wish/WishEdit.vue';
-import WishCreate from '@/pages/WishCreate.vue';
+import WishCreate from '@/pages/wish/WishCreate.vue';
 import Settings from '../template/Settings.vue';
-import GiftsList from '@/pages/GiftsList.vue';
+import GiftsList from '@/pages/gift/GiftsList.vue';
 import GiftStatusList from '../pages/giftStatus/GiftStatusList.vue';
 import GiftStatusCreate from '@/pages/giftStatus/GiftStatusCreate.vue'
 import GiftStatusEdit from '../pages/giftStatus/GiftStatusEdit.vue';
