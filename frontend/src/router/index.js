@@ -5,21 +5,21 @@ import Signin from '@/pages/Signin.vue';
 import Signup from '@/pages/Signup.vue';
 import Template from '@/template/Template.vue';
 import Home from '@/pages/Home.vue';
-import User from '@/pages/User.vue';
 import SignAll from '@/template/SignAll.vue';
 import Profile from '@/pages/Profile.vue';
 import GroceriesList from '@/pages/groceries/GroceriesList.vue';
 import WishesList from '@/pages/wish/WishesList.vue';
-import WishEdit from '../pages/wish/WishEdit.vue';
+import WishEdit from '@/pages/wish/WishEdit.vue';
 import WishCreate from '@/pages/wish/WishCreate.vue';
-import Settings from '../template/Settings.vue';
+import Settings from '@/template/Settings.vue';
 import GiftsList from '@/pages/gift/GiftsList.vue';
-import GiftStatusList from '../pages/giftStatus/GiftStatusList.vue';
+import GiftStatusList from '@/pages/giftStatus/GiftStatusList.vue';
 import GiftStatusCreate from '@/pages/giftStatus/GiftStatusCreate.vue'
-import GiftStatusEdit from '../pages/giftStatus/GiftStatusEdit.vue';
-import GroceriesStatusList from '../pages/groceriesStatus/GroceriesStatusList.vue';
-import GroceriesStatusCreate from '../pages/groceriesStatus/GroceriesStatusCreate.vue';
-import GroceriesStatusEdit from '../pages/groceriesStatus/GroceriesStatusEdit.vue';
+import GiftStatusEdit from '@/pages/giftStatus/GiftStatusEdit.vue';
+import GroceriesStatusList from '@/pages/groceriesStatus/GroceriesStatusList.vue';
+import GroceriesStatusCreate from '@/pages/groceriesStatus/GroceriesStatusCreate.vue';
+import GroceriesStatusEdit from '@/pages/groceriesStatus/GroceriesStatusEdit.vue';
+import UserList from '@/pages/user/UserList.vue';
 
 const routes = [
     {
@@ -63,16 +63,6 @@ const routes = [
                 component: GroceriesList,
             },
             {
-                path: "user",
-                name: "userlist",
-                component: User,
-            },
-            {
-                path: "user/:id",
-                name: "userDetail",
-                component: User,
-            },
-            {
                 path: "settings",
                 name: "settings",
                 component: Settings,
@@ -106,6 +96,11 @@ const routes = [
                         path: "groceries_status/:uid",
                         name: "groceriesStatusEdit",
                         component: GroceriesStatusEdit,
+                    },
+                    {
+                        path: "users",
+                        name: "userList",
+                        component: UserList
                     },
                     
                 ]

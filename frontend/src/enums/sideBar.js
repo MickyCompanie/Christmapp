@@ -23,5 +23,14 @@ export  const sideBarSettings = [
         title: "settings",
         routeName: "giftStatusList",
         icon: AdjustmentsHorizontalIcon,
+        routeChildren: [
+            'giftStatusList',
+            'giftStatusCreate',
+            'giftStatusEdit',
+            'groceriesStatusList',
+            'groceriesStatusCreate',
+            'groceriesStatusEdit',
+            'userList',
+        ]
     },
 ]

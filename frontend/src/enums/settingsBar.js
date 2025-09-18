@@ -1,4 +1,4 @@
-import { GiftIcon, ShoppingCartIcon } from '@heroicons/vue/24/solid'
+import { GiftIcon, ShoppingCartIcon, UserIcon } from '@heroicons/vue/24/solid'
 
 export const settingsBar = [
     {
@@ -10,5 +10,10 @@ export const settingsBar = [
         title: "groceries status",
         routeName: "groceriesStatusList",
         icon: ShoppingCartIcon,
+    },
+    {
+        title: "users",
+        routeName: "userList",
+        icon: UserIcon,
     },
 ]
