@@ -10,8 +10,9 @@ class UserReadModel(BaseModel):
     is_verified: bool
     created_at: datetime
     updated_at: datetime
+    role: str
 
-    persom_uid: Optional[uuid.UUID] = None
+    person_uid: Optional[uuid.UUID] = None
     person: Optional[PersonReadModel] = None
     
 
