@@ -11,6 +11,16 @@ export async function getAllGiftStatuses() {
     })
 }
 
+export async function getEmptyGiftStatus() {
+    return await api.get('gift-statuses/empty/')
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
+
 export async function getSpecificGiftStatus(payload) {
     return await api.get(`gift-statuses/${payload}`)
     .then((response) => {
