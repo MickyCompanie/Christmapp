@@ -5,15 +5,24 @@ export const settingsBar = [
         title: "gift status",
         routeName: "giftStatusList",
         icon: GiftIcon,
+        childrenRoutes: [
+            "giftStatusCreate",
+            "giftStatusEdit",
+        ]
     },
     {
         title: "groceries status",
         routeName: "groceriesStatusList",
         icon: ShoppingCartIcon,
+        childrenRoutes: [
+            "groceriesStatusCreate",
+            "groceriesStatusEdit",
+        ]
     },
     {
         title: "users",
         routeName: "userList",
         icon: UserIcon,
+        childrenRoutes: []
     },
 ]

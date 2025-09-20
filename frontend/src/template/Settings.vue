@@ -5,9 +5,7 @@
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
                     <SettingsTabs 
                         v-for="tabs in settingsBar"
-                        :route-name="tabs.routeName"
-                        :title="tabs.title"
-                        :icon="tabs.icon"
+                        :item="tabs"
                     />
                 </ul>
             </div>
