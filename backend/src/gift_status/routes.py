@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from .schemas import GiftStatusReadModel, GiftStatusCreateModel, GiftStatusUpdateModel
+from .schemas import GiftStatusReadModel, GiftStatusTableModel, GiftStatusEmptyModel, GiftStatusCreateModel, GiftStatusUpdateModel
 from .service import GiftStatusService
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,10 +11,20 @@ gift_status_service = GiftStatusService()
 access_token_bearer = AccessTokenBearer()
 
 
-@gift_status_router.get("/")
+@gift_status_router.get("/", response_model=GiftStatusTableModel, status_code=status.HTTP_200_OK)
 async def get_gift_statuses(session: AsyncSession = Depends(get_session)):
     gift_status_list = await gift_status_service.get_all_gift_statuses(session)
-    return gift_status_list
+
+    return {
+        "tableHeads": ["name", "color", "creation", "last update", "edit", "delete"],
+        "attributes": ["name", "color", "created_at", "updated_at"],
+        "giftStatuses": gift_status_list
+    }
+
+@gift_status_router.get("/empty", response_model=GiftStatusEmptyModel, status_code=status.HTTP_200_OK)
+async def get_empty_gift_status():
+    """Get an empty gift status model."""
+    return GiftStatusEmptyModel()
 
 @gift_status_router.get("/{uid}", response_model=GiftStatusReadModel, status_code=status.HTTP_200_OK)
 async def get_gift_status(uid: str, session: AsyncSession = Depends(get_session)):
