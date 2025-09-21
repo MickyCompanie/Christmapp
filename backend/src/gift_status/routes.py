@@ -42,7 +42,7 @@ async def create_gift_status(gift_status_data: GiftStatusCreateModel, session: A
 @gift_status_router.patch("/{uid}", response_model=GiftStatusReadModel, status_code=status.HTTP_200_OK)
 async def update_gift_status(uid: str, gift_status_data: GiftStatusUpdateModel, session: AsyncSession = Depends(get_session)):
     """Update an existing gift status."""
-    updated_gift_status = await gift_status_service.update_gift(uid, gift_status_data, session)
+    updated_gift_status = await gift_status_service.update_gift_status(uid, gift_status_data, session)
     if not updated_gift_status:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Gift Status not found")
     return updated_gift_status

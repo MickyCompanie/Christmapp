@@ -7,7 +7,7 @@ from datetime import datetime
 class GiftStatusService:
     async def get_all_gift_statuses(self, session: AsyncSession) -> list[GiftStatus]:
         """Fetch all gift statuses."""
-        statement = select(GiftStatus)
+        statement = select(GiftStatus).order_by(GiftStatus.created_at.desc())
         result = await session.execute(statement)
         return result.scalars().all()
 
@@ -51,8 +51,8 @@ class GiftStatusService:
         gift_status_to_delete = await self.get_gift_status_by_uid(uid, session)
 
         if gift_status_to_delete:
-            session.delete(gift_status_to_delete)
-            session.commit()
+            await session.delete(gift_status_to_delete)
+            await session.commit()
             return True
         else:
             return False
