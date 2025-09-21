@@ -1,7 +1,7 @@
 <template>
     <CardHeader :showBackButton="true" />
-    <GiftStatusForm 
-        :gift-status="giftStatus"
+    <StatusForm 
+        :status="giftStatus"
         buttonTitle="Create Status"
         @submit="onSubmit"
     />
@@ -11,7 +11,7 @@
 import { onMounted, ref } from 'vue';
 import { useGiftStatusStore } from '@/stores/giftStatus/index.js';
 import CardHeader from '@/components/CardHeader.vue';
-import GiftStatusForm from '@/components/forms/GiftStatusForm.vue';
+import StatusForm from '@/components/forms/StatusForm.vue';
 
 const giftStatusStore = useGiftStatusStore();
 

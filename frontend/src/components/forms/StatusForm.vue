@@ -1,14 +1,14 @@
 <template>
-    <div v-if="giftStatus" class="w-full py-4 grid grid-cols-1 gap-4 rounded-md px-4 md:px-8">
+    <div v-if="status" class="w-full py-4 grid grid-cols-1 gap-4 rounded-md px-4 md:px-8">
         <InputField 
-            v-model="giftStatus.name"
+            v-model="status.name"
             title="name"
             id="name"
             name="name"
             placeholder="tag name..."
         />
         <SelectField 
-            v-model="giftStatus.color"
+            v-model="status.color"
             title="color"
             id="color"
             name="color"
@@ -32,7 +32,7 @@ import ButtonCustom from '@/components/ButtonCustom.vue';
 defineEmits(['submit']);
 
 defineProps({
-    giftStatus: {
+    status: {
         type: Object,
         required: true
     },
