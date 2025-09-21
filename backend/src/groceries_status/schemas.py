@@ -10,6 +10,15 @@ class GrocerieStatusReadModel(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+class GrocerieStatusListModel(BaseModel):
+    table_heads: list[str]
+    attributes: list[str]
+    grocerie_statuses: list[GrocerieStatusReadModel]
+
+class GrocerieStatusEmptyModel(BaseModel):
+    name: Optional[str] = None
+    color: Optional[str] = None
+
 class GrocerieStatusCreateModel(BaseModel):
     name: str
     color: str

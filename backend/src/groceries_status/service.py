@@ -7,7 +7,7 @@ from datetime import datetime
 class GroceriesStatusService:
     async def get_all_groceries_status(self, session: AsyncSession) -> list[GroceriesStatus]:
         """Fetch all groceries status."""
-        statement = select(GroceriesStatus)
+        statement = select(GroceriesStatus).order_by(GroceriesStatus.created_at)
         result = await session.execute(statement)
         return result.scalars().all()
 
