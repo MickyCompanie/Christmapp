@@ -24,14 +24,14 @@
                 :footer="true"
                 @modal-close="onModalClose"
             >
-                <GiftStatusDetail 
-                    :gift-status-uid="selectedGiftStatusUid"
+                <StatusDetail 
+                    :status="giftStatusStore.getGiftStatus"
                 />
             </ModalWrapper>
 </template>
 
 <script setup>
-import { TagIcon, PlusIcon } from '@heroicons/vue/24/solid';
+import { PlusIcon } from '@heroicons/vue/24/solid';
 import { useGiftStatusStore } from '@/stores/giftStatus';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -39,13 +39,12 @@ import { useRouter } from 'vue-router';
 import ButtonCustom from '@/components/ButtonCustom.vue';
 import TableStriped from '@/components/TableStriped.vue';
 import ModalWrapper from '@/components/ModalWrapper.vue';
-import GiftStatusDetail from '@/pages/giftStatus/GiftStatusDetail.vue';
+import StatusDetail from '@/pages/StatusDetail.vue';
 
 const giftStatusStore = useGiftStatusStore();
 const router = useRouter();
 
 const giftStatuses = ref(null);
-const selectedGiftStatusUid = ref(null);
 const isModalOpen = ref(false);
 
 
@@ -53,14 +52,14 @@ function onAddGiftStatus() {
     router.push({ name: 'giftStatusCreate' });
 }
 
-function onRowClick(uid) {
-    selectedGiftStatusUid.value = uid;
+async function onRowClick(uid) {
+    await giftStatusStore.getSpecificGiftStatusAction(uid)
     isModalOpen.value = true;
 }
 
 function onModalClose() {
     isModalOpen.value = false;
-    selectedGiftStatusUid.value = null;
+    giftStatusStore.resetGiftStatusAction();
 }
 
 function onEdit(uid) {
