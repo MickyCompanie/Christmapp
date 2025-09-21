@@ -11,6 +11,16 @@ export async function getAllGroceriesStatuses() {
     })
 }
 
+export async function getEmptyGroceriesStatus() {
+    return await api.get('groceries-statuses/empty')
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
+
 export async function getSpecificGroceriesStatus(payload) {
     return await api.get(`groceries-statuses/${payload}`)
     .then((response) => {
