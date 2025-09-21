@@ -5,7 +5,7 @@ import router from "@/router"
 export default {
     async getAllGroceriesStatusesAction() {
         return await getAllGroceriesStatuses().then((res) => {
-            this.groceriesStatuses = res.data.grocerieStatuses;
+            this.groceriesStatuses = res.data.groceriesStatuses;
             this.tableHeads = res.data.tableHeads;
             this.attributes = res.data.attributes;
         }).catch((error) => {
@@ -14,12 +14,12 @@ export default {
     },
 
     async resetGroceriesStatusAction() {
-        this.grocerieStatus = null;
+        this.groceriesStatus = null;
     },
 
     async getEmptyGroceriesStatusAction() {
         return await getEmptyGroceriesStatus().then((res) => {
-            this.grocerieStatus = res.data;
+            this.groceriesStatus = res.data;
         })
     },
 
@@ -27,7 +27,7 @@ export default {
         const notificationsStore = useNotificationsStore();
 
         return await getSpecificGroceriesStatus(payload).then((res) => {
-            this.grocerieStatus = res.data;
+            this.groceriesStatus = res.data;
         }).catch((error) => {
             notificationsStore.setNotification({
                 message: error?.response?.data?.detail || "something went wrong",
@@ -76,6 +76,8 @@ export default {
         const notificationsStore = useNotificationsStore();
 
         return await deleteGroceriesStatus(payload).then((res) => {
+            this.getAllGroceriesStatusesAction()
+
             notificationsStore.setNotification({
             message: res?.data?.detail || "Status deleted successfully",
             statusCode: res?.status || 201
