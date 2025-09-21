@@ -51,8 +51,8 @@ class GroceriesStatusService:
         groceries_status_to_delete = await self.get_groceries_status_by_uid(uid, session)
 
         if groceries_status_to_delete:
-            session.delete(groceries_status_to_delete)
-            session.commit()
+            await session.delete(groceries_status_to_delete)
+            await session.commit()
             return True
         else:
             return False

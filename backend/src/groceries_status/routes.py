@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from .schemas import GrocerieStatusReadModel, GrocerieStatusEmptyModel, GrocerieStatusCreateModel, GrocerieStatusUpdateModel
+from .schemas import GrocerieStatusReadModel, GrocerieStatusTableModel, GrocerieStatusEmptyModel, GrocerieStatusCreateModel, GrocerieStatusUpdateModel
 from .service import GroceriesStatusService
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,13 +11,14 @@ groceries_status_service = GroceriesStatusService()
 access_token_bearer = AccessTokenBearer()
 
 
-@groceries_status_router.get("/")
+@groceries_status_router.get("/", response_model=GrocerieStatusTableModel, status_code=status.HTTP_200_OK)
 async def get_groceries_statuses(session: AsyncSession = Depends(get_session)):
     groceries_status_list = await groceries_status_service.get_all_groceries_status(session)
+
     return {
         "tableHeads": ["name", "color", "creation", "last update", "edit", "delete"],
         "attributes": ["name", "color", "created_at", "updated_at"],
-        "grocerieStatuses": groceries_status_list
+        "groceriesStatuses": groceries_status_list
     }
 
 @groceries_status_router.get("/empty", response_model=GrocerieStatusEmptyModel, status_code=status.HTTP_200_OK)
