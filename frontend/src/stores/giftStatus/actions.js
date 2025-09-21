@@ -24,9 +24,10 @@ export default {
 
     async getSpecificGiftStatusAction(payload) {
         return await getSpecificGiftStatus(payload).then((res) => {
-            console.log(res.data);
+            this.giftStatus = res.data;
         })
     },
+    
     async createGiftStatusAction(payload) {
         const notificationsStore = useNotificationsStore();
 
@@ -46,14 +47,38 @@ export default {
     },
 
     async updateGiftStatusAction(payload) {
+        const notificationsStore = useNotificationsStore();
+
         return await updateGiftStatus(payload).then((res) => {
-            console.log(res.data);
+            router.push({name: "giftStatusList"})
+
+            notificationsStore.setNotification({
+            message: res?.data?.detail || "Status created successfully",
+            statusCode: res?.status || 201
+            })
+        }).catch((error) => {
+             notificationsStore.setNotification({
+                message: error?.response?.data?.detail || null,
+                statusCode: error?.response?.status || 500
+            });
         })
     },
 
     async deleteGiftStatusAction(payload) {
+        const notificationsStore = useNotificationsStore();
+
         return await deleteGiftStatus(payload).then((res) => {
-            console.log(res.data);
+            this.getAllGiftStatusesAction()
+
+            notificationsStore.setNotification({
+            message: res?.data?.detail || "Status deleted successfully",
+            statusCode: res?.status || 201
+            })
+        }).catch((error) => {
+             notificationsStore.setNotification({
+                message: error?.response?.data?.detail || null,
+                statusCode: error?.response?.status || 500
+            });
         })
     }
-}
+} 

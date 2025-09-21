@@ -19,6 +19,15 @@
                     @click:delete="onDelete"
                 />
             </div>
+            <ModalWrapper
+                :is-modal-open="isModalOpen"
+                :footer="true"
+                @modal-close="onModalClose"
+            >
+                <GiftStatusDetail 
+                    :gift-status-uid="selectedGiftStatusUid"
+                />
+            </ModalWrapper>
 </template>
 
 <script setup>
@@ -29,11 +38,15 @@ import { useRouter } from 'vue-router';
 
 import ButtonCustom from '@/components/ButtonCustom.vue';
 import TableStriped from '@/components/TableStriped.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue';
+import GiftStatusDetail from '@/pages/giftStatus/GiftStatusDetail.vue';
 
 const giftStatusStore = useGiftStatusStore();
 const router = useRouter();
 
 const giftStatuses = ref(null);
+const selectedGiftStatusUid = ref(null);
+const isModalOpen = ref(false);
 
 
 function onAddGiftStatus() {
@@ -41,10 +54,14 @@ function onAddGiftStatus() {
 }
 
 function onRowClick(uid) {
-  // selectedWishUid.value = uid;
-  // isModalOpen.value = true;
+    selectedGiftStatusUid.value = uid;
+    isModalOpen.value = true;
 }
 
+function onModalClose() {
+    isModalOpen.value = false;
+    selectedGiftStatusUid.value = null;
+}
 
 function onEdit(uid) {
     router.push({ name: 'giftStatusEdit', params: { uid: uid } });

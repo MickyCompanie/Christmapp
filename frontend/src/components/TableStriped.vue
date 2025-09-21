@@ -14,12 +14,12 @@
                     {{ data[attribute] }}
                 </td>
                 <td class="px-6 py-4">
-                    <div v-if="authStore.user.role === 'admin' || (ownerAttribute && data[ownerAttribute] === authStore.getPersonUid)" @click="$emit('click:edit', data.uid)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
+                    <div v-if="authStore?.user?.role === 'admin' || (ownerAttribute && data[ownerAttribute] === authStore.getPersonUid)" @click="$emit('click:edit', data.uid)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
                         <pencil-icon class="w-5 h-5"/>
                     </div>
                 </td>
                 <td class="px-6 py-4">
-                    <div v-if="authStore.user.role === 'admin' || (ownerAttribute && data[ownerAttribute] === authStore.getPersonUid)" @click="$emit('click:delete', data.uid)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
+                    <div v-if="authStore?.user?.role === 'admin' || (ownerAttribute && data[ownerAttribute] === authStore.getPersonUid)" @click="$emit('click:delete', data.uid)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
                         <trash-icon class="w-5 h-5"/>
                     </div>
                 </td>
