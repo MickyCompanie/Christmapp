@@ -1,6 +1,6 @@
-import { signin, signup, revokeToken, getUser } from "../../service/auth";
+import { signin, signup, revokeToken, getUser, getAllUsers, upgradeUserRole, downgradeUserRole } from "../../service/auth";
 import { updatePerson } from "../../service/person";
-
+import { useNotificationsStore } from "@/stores/notifications";
 import router from "@/router"
 
 
@@ -31,6 +31,50 @@ export default {
         }).catch(() => {
             this.logout()
         });
+    },
+
+    async getAllUsersAction() {
+        return await getAllUsers()
+        .then((response) => {
+            this.users = response.data
+        })
+        .catch((error) => {
+
+        })
+    },
+
+    async upgradeUserRoleAction(uid){
+        const notificationsStore = useNotificationsStore();
+
+        return await upgradeUserRole(uid).then((response) => {
+            this.getAllUsersAction()
+
+            notificationsStore.setNotification({
+            message: res?.data?.detail || "User Upgraded Successfully",
+            statusCode: res?.status || 201
+            })
+
+        }).catch((error) => {
+
+        })
+    },
+
+    async downgradeUserRoleAction(uid){
+        const notificationsStore = useNotificationsStore();
+        
+        return await downgradeUserRole(uid)
+        .then((response) => {
+            this.getAllUsersAction()
+
+            notificationsStore.setNotification({
+            message: res?.data?.detail || "User Downgraded Successfully",
+            statusCode: res?.status || 201
+            })
+
+        })
+        .catch((error) => {
+
+        })
     },
 
     async logout() {

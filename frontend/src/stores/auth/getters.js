@@ -4,4 +4,5 @@ export default {
     getAccessToken: (state) => state.accessToken,
     getRefreshToken: (state) => state.refreshToken,
     getPersonUid: (state) => state.user?.person?.uid,
+    getUsers: (state) => state.users
 };

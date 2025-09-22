@@ -35,6 +35,36 @@ export async function getUser() {
     });
 }
 
+export async function getAllUsers(){
+    return await api.get("users/")
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
+
+export async function upgradeUserRole(uid){
+    return await api.post(`users/upgrade/${uid}`)
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
+
+export async function downgradeUserRole(uid){
+    return await api.post(`users/downgrade/${uid}`)
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
+
 export async function revokeToken() {
     return await api.get("/auth/logout")
     .then((response) => {
