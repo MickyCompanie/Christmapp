@@ -8,13 +8,14 @@ from src.person.service import PersonService
 from src.person.schemas import PersonCreateModel
 from src.auth.utils import generate_password_hash
 from src.config import Config
+from datetime import datetime
 
 person_service = PersonService()
 
 class UserService:
     async def get_all_users(self, session: AsyncSession) -> list[User]:
         """Fetch all users."""
-        statement = select(User)
+        statement = select(User).options(selectinload(User.person)).order_by(User.created_at)
         result = await session.execute(statement)
         return result.scalars().all()
     
@@ -79,6 +80,37 @@ class UserService:
         await session.commit()
         return await self.get_user_by_uid(new_user.uid, session)
     
+    async def upgrade_user_role(self, uid: str, session: AsyncSession) -> bool:
+        """Set user's role from user to admin"""
+        user_to_upgrade = await self.get_user_by_uid(uid, session)
+
+        if not user_to_upgrade:
+            return False  
+
+        if user_to_upgrade.role != 'user':
+            return False 
+
+        user_to_upgrade.role = 'admin'
+        user_to_upgrade.updated_at = datetime.now()
+        await session.commit()
+        await session.refresh(user_to_upgrade)
+        return True
+    
+    async def downgrade_user_role(self, uid: str, session: AsyncSession) -> bool:
+        """Set user's role from admin to user"""
+        user_to_downgrade = await self.get_user_by_uid(uid, session)
+
+        if not user_to_downgrade:
+            return False  
+
+        if user_to_downgrade.role != 'admin':
+            return False 
+
+        user_to_downgrade.role = 'user'
+        user_to_downgrade.updated_at = datetime.now()
+        await session.commit()
+        await session.refresh(user_to_downgrade)
+        return True
     
     async def delete_user(self, uid: str, session: AsyncSession) -> bool:
         """Delete a user."""
