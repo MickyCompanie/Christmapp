@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 import uuid
 from datetime import datetime
 from typing import Optional
-from src.person.schemas import PersonReadModel
+from src.person.schemas import PersonUserReadModel
 
 class UserReadModel(BaseModel):
     uid: uuid.UUID
@@ -13,7 +13,7 @@ class UserReadModel(BaseModel):
     role: str
 
     person_uid: Optional[uuid.UUID] = None
-    person: Optional[PersonReadModel] = None
+    person: Optional[PersonUserReadModel] = None
     
 
 class UserCreateModel(BaseModel):

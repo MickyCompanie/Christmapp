@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from .schemas import PersonCreateModel, PersonReadModel, PersonUpdateModel
+from .schemas import PersonCreateModel, PersonReadModel, PersonEmptyModel, PersonTableModel, PersonUpdateModel
 from .service import PersonService
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -12,10 +12,19 @@ user_service = PersonService()
 access_token_bearer = AccessTokenBearer()
 role_checker = Depends(RoleChecker(allowed_roles=["admin", "user"]))
 
-@person_router.get("/", dependencies=[role_checker])
+@person_router.get("/", response_model=PersonTableModel, status_code=status.HTTP_200_OK, dependencies=[role_checker])
 async def get_persons(session: AsyncSession = Depends(get_session), user_details=Depends(access_token_bearer)):
     persons_list = await user_service.get_all_persons(session)
-    return persons_list
+    return {
+        "tableHeads": ["Last Name", "First Name", "creation", "last update", "edit", "delete"],
+        "attributes": ["last_name", "first_name", "created_at", "updated_at"],
+        "persons": persons_list
+    }
+
+@person_router.get("/empty", response_model=PersonEmptyModel, status_code=status.HTTP_200_OK)
+async def get_empty_person(session: AsyncSession = Depends(get_session)):
+    """Get an empty person model"""
+    return PersonEmptyModel()
 
 @person_router.get("/{uid}", response_model=PersonReadModel, status_code=status.HTTP_200_OK)
 async def get_person(uid: str, session: AsyncSession = Depends(get_session)):

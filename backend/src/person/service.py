@@ -2,19 +2,20 @@ from .models import Person
 from .schemas import PersonCreateModel, PersonReadModel, PersonUpdateModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
+from sqlalchemy.orm import selectinload
 from fastapi import HTTPException
 from datetime import datetime
 
 class PersonService:
     async def get_all_persons(self, session: AsyncSession) -> list[Person]:
         """Fetch all persons."""
-        statement = select(Person)
+        statement = select(Person).options(selectinload(Person.user)).order_by(Person.created_at)
         result = await session.execute(statement)
         return result.scalars().all()
 
     async def get_person_by_uid(self, uid: str, session: AsyncSession) -> Person | None:
         """Fetch a person by UID."""
-        statement = select(Person).where(Person.uid == uid)
+        statement = select(Person).options(selectinload(Person.user)).where(Person.uid == uid)
         result = await session.execute(statement)
         return result.scalar_one_or_none()
     
@@ -58,8 +59,8 @@ class PersonService:
         person_to_delete = await self.get_person_by_uid(uid, session)
 
         if person_to_delete:
-            session.delete(person_to_delete)
-            session.commit()
+            await session.delete(person_to_delete)
+            await session.commit()
             return True
         else:
             return False
