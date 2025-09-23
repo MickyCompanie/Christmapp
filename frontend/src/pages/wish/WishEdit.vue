@@ -1,5 +1,5 @@
 <template>
-<Page>
+    <Page>
         <Card>
             <CardHeader :showBackButton="true" />
             <WishForm 

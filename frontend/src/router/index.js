@@ -20,6 +20,9 @@ import GroceriesStatusList from '@/pages/groceriesStatus/GroceriesStatusList.vue
 import GroceriesStatusCreate from '@/pages/groceriesStatus/GroceriesStatusCreate.vue';
 import GroceriesStatusEdit from '@/pages/groceriesStatus/GroceriesStatusEdit.vue';
 import UserList from '@/pages/user/UserList.vue';
+import PersonList from '@/pages/person/PersonList.vue';
+import PersonCreate from '@/pages/person/PersonCreate.vue';
+import PersonEdit from '@/pages/person/PersonEdit.vue';
 
 const routes = [
     {
@@ -56,6 +59,21 @@ const routes = [
                 path: "gifts",
                 name: "giftlist",
                 component: GiftsList,
+            },
+            {
+                path: "people",
+                name: "personlist",
+                component: PersonList,
+            },
+            {
+                path: "people/:uid",
+                name: "personEdit",
+                component: PersonEdit,
+            },
+            {
+                path: "person/create",
+                name: "personCreate",
+                component: PersonCreate,
             },
             {
                 path: "groceries",
