@@ -1,24 +1,26 @@
 <template>
-    <div class="w-full py-4 grid grid-cols-1 gap-4 rounded-md px-4 md:px-8">
-        <InputField 
+    <form @submit.prevent="$emit('submit')">
+        <div class="w-full py-4 grid grid-cols-1 gap-4 rounded-md px-4 md:px-8">
+            <InputField 
             v-model="wish.title"
             title="title"
             id="title"
             name="title"
             placeholder="what do you wish for?"
-        />
-        <TextAreaField 
+            />
+            <TextAreaField 
             v-model="wish.description"
             title="description"
             id="description"
             name="description"
             placeholder="Tell us more about your wish..."
-        />
-    </div>
-
-    <div class="w-full flex justify-end px-4 pt-8 md:px-8">
-        <ButtonCustom :title="buttonTitle" @click="$emit('submit')" />
-     </div>
+            />
+        </div>
+        
+        <div class="w-full flex justify-end px-4 pt-8 md:px-8">
+            <ButtonCustom :title="buttonTitle" @click="$emit('submit')" />
+        </div>
+    </form>
 
 </template>
 
