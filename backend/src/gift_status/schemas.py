@@ -23,6 +23,11 @@ class GiftStatusEmptyModel(BaseModel):
     name: Optional[str] = None
     color: Optional[str] = None
 
+class GiftStatusSelectModel(BaseModel):
+    uid: uuid.UUID
+    name: str
+    color: str
+
 class GiftStatusCreateModel(BaseModel):
     name: str = Field(..., max_length=50)
     color: str = Field(..., max_length=20)

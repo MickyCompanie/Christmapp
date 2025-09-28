@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_serializer
+from pydantic import BaseModel, Field, field_serializer, computed_field
 from typing import Optional
 import uuid
 from datetime import datetime
@@ -26,6 +26,16 @@ class PersonTableModel(BaseModel):
     tableHeads: list[str]
     attributes: list[str]
     persons: list[PersonReadModel]
+
+class PersonSelectModel(BaseModel):
+    uid: uuid.UUID
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+
+    @computed_field 
+    @property
+    def name(self) -> str:
+        return f"{self.first_name or ''} {self.last_name or ''}".strip()
 
 class PersonUserReadModel(BaseModel):
     uid: uuid.UUID 

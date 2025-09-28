@@ -13,6 +13,12 @@ class PersonService:
         result = await session.execute(statement)
         return result.scalars().all()
 
+    async def get_all_persons_except_current_user(self, session: AsyncSession, user_details: dict):
+        """Fetch all persons except current user's one"""
+        statement = select(Person).where(Person.uid != user_details.person.uid)
+        result = await session.execute(statement)
+        return result.scalars().all()
+
     async def get_person_by_uid(self, uid: str, session: AsyncSession) -> Person | None:
         """Fetch a person by UID."""
         statement = select(Person).options(selectinload(Person.user)).where(Person.uid == uid)
