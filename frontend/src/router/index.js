@@ -13,6 +13,8 @@ import WishEdit from '@/pages/wish/WishEdit.vue';
 import WishCreate from '@/pages/wish/WishCreate.vue';
 import Settings from '@/template/Settings.vue';
 import GiftsList from '@/pages/gift/GiftsList.vue';
+import GiftCreate from '@/pages/gift/GiftCreate.vue';
+import GiftEdit from '@/pages/gift/GiftEdit.vue';
 import GiftStatusList from '@/pages/giftStatus/GiftStatusList.vue';
 import GiftStatusCreate from '@/pages/giftStatus/GiftStatusCreate.vue'
 import GiftStatusEdit from '@/pages/giftStatus/GiftStatusEdit.vue';
@@ -59,6 +61,16 @@ const routes = [
                 path: "gifts",
                 name: "giftlist",
                 component: GiftsList,
+            },
+            {
+                path: "gifts",
+                name: "giftCreate",
+                component: GiftCreate,
+            },
+            {
+                path: "gifts/:uid",
+                name: "giftEdit",
+                component: GiftEdit,
             },
             {
                 path: "people",

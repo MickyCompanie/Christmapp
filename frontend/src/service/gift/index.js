@@ -11,6 +11,14 @@ export async function getAllGifts() {
     })
 }
 
+export async function getEmptyGift(){
+    return await api.get('gifts/empty').then((response) => {
+        return response
+    }).catch((error) => {
+        console.error(error)
+    })
+}
+
 export async function getSpecificGift(payload) {
     return await api.get(`gifts/${payload}`)
     .then((response) => {

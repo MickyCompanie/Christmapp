@@ -1,6 +1,6 @@
 <template>
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table :key="tableData" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th v-for="head in tableHeads" :key="head" scope="col" class="px-6 py-3 select-none">
@@ -10,9 +10,17 @@
         </thead>
         <tbody>
             <tr v-for="data in tableData" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                <td v-for="attribute in attributes" @click="$emit('click:row', data.uid)" class="px-6 py-4 select-none cursor-pointer">
-                    {{ data[attribute] }}
-                </td>
+                <template v-for="attribute in attributes">
+                    <td v-if="attribute === 'status'" @click="$emit('click:row', data.uid)" class="px-6 py-4 select-none cursor-pointer">
+                        <Badge  
+                            :title="data.status.name"
+                            :color="data.status.color" 
+                        />
+                    </td>
+                    <td v-else  @click="$emit('click:row', data.uid)" class="px-6 py-4 select-none cursor-pointer">
+                        {{ data[attribute] }}
+                    </td>
+                </template>
                 <td class="px-6 py-4">
                     <div v-if="authStore?.user?.role === 'admin' || (ownerAttribute && data[ownerAttribute] === authStore.getPersonUid)" @click="$emit('click:edit', data.uid)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
                         <pencil-icon class="w-5 h-5"/>
@@ -32,6 +40,9 @@
 <script setup>
 import { useAuthStore } from '../stores/auth';
 import { PencilIcon, TrashIcon } from '@heroicons/vue/24/solid';
+
+import Badge from '@/components/Badge.vue'
+
 const authStore = useAuthStore();
 defineProps({
     tableHeads: {
