@@ -19,15 +19,15 @@ defineProps({
         required: true
     },
     icon: {
+        type: [Object, Function],
+        required: false,
+        default: null
+    },
     type: {
         type: String,
         required: false,
         default: "button"
     }, 
-    required: false,
-    default: null
-  }
-
 });
 defineEmits(['click']);
 </script>
