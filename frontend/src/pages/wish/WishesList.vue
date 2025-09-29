@@ -1,17 +1,12 @@
 <template>
     <Page>
         <Card>
-           <div class="select-none flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                <div class="flex gap-x-4 ">
-                    <SparklesIcon class="w-8 h-8 text-blue-400text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"/>
-                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Wishes
-                    </h5>
-                </div>
-                <div>
-                    <ButtonCustom title="Make A Wish" :icon="PlusIcon" @click="onAddWish()" />
-                </div>
-            </div>
+           <ListCardTitle 
+                :icon="SparklesIcon"
+                title="Wishes"
+                button-text="Make A Wish"
+                @add="onAddWish()"
+            />
 
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-4">
                 <TableStriped 
@@ -39,7 +34,7 @@
 </template>
 
 <script setup>
-import { SparklesIcon, PlusIcon } from '@heroicons/vue/24/solid';
+import { SparklesIcon } from '@heroicons/vue/24/solid';
 
 import { useWishStore } from '@/stores/wish';
 import { onMounted, ref } from 'vue';
@@ -50,7 +45,7 @@ import Card from '@/template/Card.vue';
 import ModalWrapper from '@/components/ModalWrapper.vue';
 import WishDetail from '@/pages/wish/WishDetail.vue';
 import TableStriped from '@/components/TableStriped.vue';
-import ButtonCustom from '@/components/ButtonCustom.vue';
+import ListCardTitle from '@/components/ListCardTitle.vue';
 
 const wishesStore = useWishStore();
 const router = useRouter();
