@@ -8,6 +8,8 @@ import Home from '@/pages/Home.vue';
 import SignAll from '@/template/SignAll.vue';
 import Profile from '@/pages/Profile.vue';
 import GroceriesList from '@/pages/groceries/GroceriesList.vue';
+import GroceriesCreate from '@/pages/groceries/GroceriesCreate.vue';
+import GroceriesEdit from '@/pages/groceries/GroceriesEdit.vue';
 import WishesList from '@/pages/wish/WishesList.vue';
 import WishEdit from '@/pages/wish/WishEdit.vue';
 import WishCreate from '@/pages/wish/WishCreate.vue';
@@ -63,7 +65,7 @@ const routes = [
                 component: GiftsList,
             },
             {
-                path: "gifts",
+                path: "gifts/create",
                 name: "giftCreate",
                 component: GiftCreate,
             },
@@ -78,7 +80,7 @@ const routes = [
                 component: PersonList,
             },
             {
-                path: "people/:uid",
+                path: "person/:uid",
                 name: "personEdit",
                 component: PersonEdit,
             },
@@ -91,6 +93,16 @@ const routes = [
                 path: "groceries",
                 name: "grocerieslist",
                 component: GroceriesList,
+            },
+            {
+                path: "groceries/create",
+                name: "groceriesCreate",
+                component: GroceriesCreate,
+            },
+            {
+                path: "groceries/:uid",
+                name: "groceriesEdit",
+                component: GroceriesEdit,
             },
             {
                 path: "settings",
