@@ -1,4 +1,5 @@
 from .models import Gift
+from src.person.models import Person
 from .schemas import GiftReadModel, GiftCreateModel, GiftUpdateModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
@@ -8,13 +9,13 @@ from sqlalchemy.orm import selectinload
 class GiftService:
     async def get_all_gifts(self, user_details: dict, session: AsyncSession) -> list[Gift]:
         """Fetch all gifts."""
-        statement = select(Gift).options(selectinload(Gift.status)).where(Gift.buyer_uid == user_details.person.uid).order_by(Gift.created_at)
+        statement = select(Gift).options(selectinload(Gift.status), selectinload(Gift.recipient).selectinload(Person.user)).where(Gift.buyer_uid == user_details.person.uid).order_by(Gift.created_at)
         result = await session.execute(statement)
         return result.scalars().all()
 
     async def get_gift_by_uid(self, uid: str, session: AsyncSession) -> Gift | None:
         """Fetch a gift by UID."""
-        statement = select(Gift).where(Gift.uid == uid)
+        statement = select(Gift).options(selectinload(Gift.status), selectinload(Gift.recipient).selectinload(Person.user)).where(Gift.uid == uid)
         result = await session.execute(statement)
         return result.scalar_one_or_none()
     

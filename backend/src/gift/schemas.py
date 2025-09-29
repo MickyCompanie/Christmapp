@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, field_serializer
 from typing import Optional
 import uuid
 from datetime import datetime
-from src.person.schemas import PersonSelectModel
+from src.person.schemas import PersonSelectModel, PersonReadModel
 from src.gift_status.schemas import GiftStatusSelectModel, GiftStatusReadModel
 
 class GiftReadModel(BaseModel):
@@ -11,6 +11,7 @@ class GiftReadModel(BaseModel):
     description: Optional[str] = None
     buyer_uid: Optional[uuid.UUID] = None
     recipient_uid: Optional[uuid.UUID] = None
+    recipient: Optional[PersonReadModel] = None
     status_uid: uuid.UUID
     status: Optional[GiftStatusReadModel]
     created_at: datetime
