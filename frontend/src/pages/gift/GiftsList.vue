@@ -26,6 +26,15 @@
                 />
             </div>
         </Card>
+        <ModalWrapper
+            :is-modal-open="isModalOpen"
+            :footer="true"
+            @modal-close="onModalClose"
+        >
+            <GiftDetail 
+                :gift-uid="selectedGiftUid"
+            />
+        </ModalWrapper>
     </Page>
 </template>
 
@@ -33,21 +42,33 @@
 import { GiftIcon, PlusIcon } from '@heroicons/vue/24/solid';
 import { useGiftStore } from '@/stores/gift'
 import { useRouter } from 'vue-router';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import Page from '@/template/Page.vue';
 import Card from '@/template/Card.vue';
 import ButtonCustom from '@/components/ButtonCustom.vue'
 import TableStriped from '@/components/TableStriped.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue'
+import GiftDetail from '@/pages/gift/GiftDetail.vue';
 
 const giftStore = useGiftStore()
 const router = useRouter()
+const selectedGiftUid = ref(null)
+const isModalOpen = ref(false)
 
 function onAddGift(){
     router.push({name: 'giftCreate'})
 }
 
 function onRowClick(uid){
+    selectedGiftUid.value = uid
+    isModalOpen.value = true
+}
+
+function onModalClose(){
+    isModalOpen.value = false
+    selectedGiftUid.value = null
+    giftStore.resetGiftAction()
 
 }
 
