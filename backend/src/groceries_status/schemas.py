@@ -23,6 +23,11 @@ class GrocerieStatusEmptyModel(BaseModel):
     name: Optional[str] = None
     color: Optional[str] = None
 
+class GrocerieStatusSelectModel(BaseModel):
+    uid: uuid.UUID
+    name: str
+    color: str
+
 class GrocerieStatusCreateModel(BaseModel):
     name: str
     color: str

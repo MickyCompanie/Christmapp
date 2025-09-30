@@ -2,18 +2,20 @@ from .models import Grocerie
 from .schemas import GrocerieReadModel, GrocerieCreateModel, GrocerieUpdateModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
+from sqlalchemy.orm import selectinload
 from datetime import datetime
+from src.person.models import Person
 
 class GrocerieService:
     async def get_all_groceries(self, session: AsyncSession) -> list[Grocerie]:
         """Fetch all groceries."""
-        statement = select(Grocerie)
+        statement = select(Grocerie).options(selectinload(Grocerie.status), selectinload(Grocerie.assigned_person).selectinload(Person.user)).order_by(Grocerie.created_at)
         result = await session.execute(statement)
         return result.scalars().all()
 
     async def get_grocerie_by_uid(self, uid: str, session: AsyncSession) -> Grocerie | None:
         """Fetch a grocerie by UID."""
-        statement = select(Grocerie).where(Grocerie.uid == uid)
+        statement = select(Grocerie).options(selectinload(Grocerie.status),  selectinload(Grocerie.assigned_person).selectinload(Person.user)).where(Grocerie.uid == uid)
         result = await session.execute(statement)
         return result.scalar_one_or_none()
     
@@ -25,7 +27,8 @@ class GrocerieService:
 
         session.add(new_grocerie)
         await session.commit()
-        return new_grocerie
+        await session.refresh(new_grocerie)
+        return await self.get_grocerie_by_uid(new_grocerie.uid, session)
     
     async def update_grocerie(self, uid: str, grocerie_data: GrocerieUpdateModel, session: AsyncSession) -> Grocerie:
         """Update an existing grocerie."""
@@ -51,8 +54,8 @@ class GrocerieService:
         grocerie_to_delete = await self.get_grocerie_by_uid(uid, session)
 
         if grocerie_to_delete:
-            session.delete(grocerie_to_delete)
-            session.commit()
+            await session.delete(grocerie_to_delete)
+            await session.commit()
             return True
         else:
             return False

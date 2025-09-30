@@ -11,6 +11,16 @@ export async function getAllGroceries() {
     })
 }
 
+export async function getEmptyGrocerie() {
+    return api.get('groceries/empty')
+    .then((response) => {
+        return response
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
+
 export async function getSpecificGrocerie(payload) {
     return await api.get(`groceries/${payload}`)
     .then((response) => {
