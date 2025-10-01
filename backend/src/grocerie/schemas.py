@@ -52,4 +52,3 @@ class GrocerieUpdateModel(BaseModel):
     description: Optional[str] = None
     assigned_person_uid: Optional[uuid.UUID] = None
     status_uid: Optional[uuid.UUID] = None
-    updated_at: datetime = Field(default_factory=datetime.now)

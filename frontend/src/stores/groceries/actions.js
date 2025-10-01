@@ -54,7 +54,15 @@ export default {
         const notificationsStore = useNotificationsStore();
 
         return await updateGrocerie(payload).then((res) => {
-            console.log(res.data);
+            if(res.status === 200){
+                router.push({name: 'grocerieslist'})
+                this.resetGrocerieAction()
+
+                notificationsStore.setNotification({
+                    message: res?.data?.detail || "Item updated successfully",
+                    statusCode: res?.status
+                })
+            }
         })
     },
 
