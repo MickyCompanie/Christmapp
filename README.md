@@ -4,10 +4,7 @@
 
 <h1 align="center">🎄 Christmapp</h1>
 <p align="center">Your Christmas gift & wishlist manager</p>
-
-# 🎅 Christmapp
-
-> _Because even elves need a plan._
+<p align="center"><i>Because even elves need a plan.</i></p>
 
 **Christmapp** is a festive web app designed to help you organize your Christmas celebrations with joy and ease. Whether you're a busy elf or the head of a holiday-loving household, Christmapp helps you plan, share, and enjoy a magical Christmas season.
 
