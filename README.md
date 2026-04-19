@@ -1,3 +1,10 @@
+<p align="center">
+  <img src="frontend/public/android-chrome-512x512.png" alt="Christmapp Logo" width="200">
+</p>
+
+<h1 align="center">🎄 Christmapp</h1>
+<p align="center">Your Christmas gift & wishlist manager</p>
+
 # 🎅 Christmapp
 
 > _Because even elves need a plan._
@@ -9,14 +16,19 @@
 
 - [FastApi](https://fastapi.tiangolo.com/)
 - [Redis](https://redis.io/)
+- [Alambic](https://alembic.sqlalchemy.org/en/latest/)
 - [Vue.js](https://vuejs.org/)
 - [Flowbite](https://flowbite.com/)
 
 ## ✨ Features
 
-- 🎁 **Gift List Tracker**: Keep tabs on gift ideas, purchases, and recipients.
-- 🧑‍🎄 **Collaborative Mode**: Share your plans with family and friends.
-- 🌟 **Festive Interface**: A cheerful design that brings the holiday spirit to life.
+- 🔐 **Secure Login**:  Even Santa needs protection from the Grinch
+- 👤 **Custom Profile**:  Make your account as unique as your ugly Christmas sweater
+- 🛡️ **Admin‑Only Settings**:  Elves not allowed
+- 🌟 **Wish List**:  Tell your loved ones what will make your Christmas sparkle
+- 🎁 **Gift Tracker**:  Never forget who gets what again
+- 🛒 **Groceries List**:  Because Christmas dinner doesn’t cook itself
+- 🎨 **Simple & Clean UI**:  No snowstorm of buttons, just clarity
 
 ## 🚀 Installation
 
